@@ -50,14 +50,22 @@ function DateCalculator() {
 
   return (
     <div>
-      <label>Select a date:</label>
+      <h3>Select a date:</h3>
       <input
         type="date"
         value={selectedDate.toISOString().split("T")[0]}
         onChange={(e) => handleDateChange(new Date(e.target.value))}
       />
       <div>
-        <p>Calculated Date: {calculatedDate.toISOString().split("T")[0]}</p>
+        <p>term: {calculatedDate.toISOString().split("T")[0]}</p>
+      </div>
+      <div>
+        <h3>closed</h3>
+        <ul>
+          {holidays.map((holiday) => {
+            return <li key={holiday}>{holiday}</li>;
+          })}
+        </ul>
       </div>
     </div>
   );
