@@ -1,1 +1,1 @@
-🚀 https://whatterm.vercel.app/
+🚀 https://termcalculator.vercel.app/
