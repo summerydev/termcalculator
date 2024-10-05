@@ -1,20 +1,6 @@
 import React, { useState } from "react";
+
 const holidays = [
-  "2024/01/01",
-  "2024/02/09",
-  "2024/02/10",
-  "2024/02/12",
-  "2024/03/01",
-  "2024/05/05",
-  "2024/05/06",
-  "2024/05/15",
-  "2024/06/06",
-  "2024/08/15",
-  "2024/09/16",
-  "2024/09/17",
-  "2024/09/18",
-  "2024/09/19",
-  "2024/09/20",
   "2024/10/01",
   "2024/10/03",
   "2024/10/09",
@@ -36,16 +22,32 @@ const addDays = (date, days) => {
   return result;
 };
 
-const calTerm = (newDate) => {
-  let resultDate = addDays(newDate, 84);
+const calHolidays = (newDate, resultDate) => {
+  let holidaysCount = 0;
   for (const holiday of holidays) {
     if (new Date(holiday) >= newDate && new Date(holiday) <= resultDate) {
-      resultDate = addDays(resultDate, 1);
+      holidaysCount++;
     }
   }
+  return holidaysCount;
+};
+
+const calTerm = (newDate) => {
+  let resultDate = addDays(newDate, 84);
+  let holidaysCount = calHolidays(newDate, resultDate);
+  resultDate = addDays(resultDate, holidaysCount);
+
+  // 일요일 체크
   if (isSunday(resultDate)) {
     resultDate = addDays(resultDate, 1);
   }
+
+  for (const holiday of holidays) {
+    if (new Date(resultDate).getDate()== new Date(holiday).getDate()) {
+      resultDate = addDays(resultDate, 1);
+    }
+  }
+  console.log(resultDate);
   return resultDate;
 };
 
@@ -53,10 +55,13 @@ function DateCalculator() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [calculatedDate, setCalculatedDate] = useState(calTerm(new Date()));
 
-  const handleDateChange = (newDate) => {
-    setSelectedDate(newDate);
-    let resultDate = calTerm(newDate);
-    setCalculatedDate(resultDate);
+  const handleDateChange = (e) => {
+    const newDate = new Date(e.target.value);
+    if (!isNaN(newDate)) {
+      // 유효한 날짜인지 확인
+      setSelectedDate(newDate);
+      setCalculatedDate(calTerm(newDate));
+    }
   };
 
   return (
@@ -65,13 +70,13 @@ function DateCalculator() {
       <input
         type="date"
         value={selectedDate.toISOString().split("T")[0]}
-        onChange={(e) => handleDateChange(new Date(e.target.value))}
+        onChange={handleDateChange}
       />
       <div>
-        <p>term: {calculatedDate.toISOString().split("T")[0]}</p>
+        <p>Term: {calculatedDate.toISOString().split("T")[0]}</p>
       </div>
       <div>
-        <h3>closed</h3>
+        <h3>Closed</h3>
         <ul>
           {holidays.map((holiday) => {
             return <li key={holiday}>{holiday}</li>;
@@ -81,4 +86,5 @@ function DateCalculator() {
     </div>
   );
 }
+
 export default DateCalculator;
