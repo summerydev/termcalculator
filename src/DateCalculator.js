@@ -21,6 +21,7 @@ const holidays = [
   "2024/12/25",
   "2024/12/30",
   "2024/12/31",
+  "2025/1/1",
 ];
 
 const isSunday = (date) => date.getDay() === 0;
