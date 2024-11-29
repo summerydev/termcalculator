@@ -1,6 +1,21 @@
 import React, { useState } from "react";
 
 const holidays = [
+  "2024/01/01",
+  "2024/02/09",
+  "2024/02/10",
+  "2024/02/12",
+  "2024/03/01",
+  "2024/05/05",
+  "2024/05/06",
+  "2024/05/15",
+  "2024/06/06",
+  "2024/08/15",
+  "2024/09/16",
+  "2024/09/17",
+  "2024/09/18",
+  "2024/09/19",
+  "2024/09/20",
   "2024/10/01",
   "2024/10/03",
   "2024/10/09",
@@ -37,22 +52,20 @@ const calHolidays = (newDate, resultDate) => {
 const calTerm = (newDate) => {
   let resultDate = addDays(newDate, 84);
   let holidaysCount = calHolidays(newDate, resultDate);
-  let newResultDate = addDays(resultDate, holidaysCount);
+  resultDate = addDays(resultDate, holidaysCount);
+
+  // 일요일 체크
+  if (isSunday(resultDate)) {
+    resultDate = addDays(resultDate, 1);
+  }
 
   for (const holiday of holidays) {
-    if (new Date(newResultDate).getDate() == new Date(holiday).getDate()) {
-      newResultDate = addDays(newResultDate, 1);
+    if (new Date(resultDate).getDate() == new Date(holiday).getDate()) {
+      resultDate = addDays(resultDate, 1);
     }
   }
-  let currentDate = new Date(resultDate);
-  while (currentDate <= newResultDate) {
-    if (resultDate.getDay() === 0) {
-      console.log(resultDate);
-      break;
-    }
-    break;
-  }
-  return newResultDate;
+  console.log(resultDate);
+  return resultDate;
 };
 
 function DateCalculator() {
