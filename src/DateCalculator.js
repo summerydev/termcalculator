@@ -27,6 +27,8 @@ const holidays = [
   "2025/01/28",
   "2025/01/29",
   "2025/01/30",
+  "2025/03/01",
+  "2025/03/03",
 ];
 
 const isSunday = (date) => date.getDay() === 0;
@@ -50,20 +52,22 @@ const calHolidays = (newDate, resultDate) => {
 const calTerm = (newDate) => {
   let resultDate = addDays(newDate, 84);
   let holidaysCount = calHolidays(newDate, resultDate);
-  resultDate = addDays(resultDate, holidaysCount);
-
-  // 일요일 체크
-  if (isSunday(resultDate)) {
-    resultDate = addDays(resultDate, 1);
-  }
+  let newResultDate = addDays(resultDate, holidaysCount);
 
   for (const holiday of holidays) {
-    if (new Date(resultDate).getDate()== new Date(holiday).getDate()) {
-      resultDate = addDays(resultDate, 1);
+    if (new Date(newResultDate).getDate() == new Date(holiday).getDate()) {
+      newResultDate = addDays(newResultDate, 1);
     }
   }
-  console.log(resultDate);
-  return resultDate;
+  let currentDate = new Date(resultDate);
+  while (currentDate <= newResultDate) {
+    if (resultDate.getDay() === 0) {
+      console.log(resultDate);
+      break;
+    }
+    break;
+  }
+  return newResultDate;
 };
 
 function DateCalculator() {
