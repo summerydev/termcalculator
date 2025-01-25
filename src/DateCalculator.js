@@ -1,17 +1,41 @@
 import React, { useState } from "react";
 
 const holidays = [
-  "2024/01/01", "2024/02/09", "2024/02/10", "2024/02/12",
-  "2024/03/01", "2024/05/05", "2024/05/06", "2024/05/15",
-  "2024/06/06", "2024/08/15", "2024/09/16", "2024/09/17",
-  "2024/09/18", "2024/09/19", "2024/09/20", "2024/10/01",
-  "2024/10/03", "2024/10/09", "2024/12/25", "2024/12/30",
-  "2024/12/31", "2025/01/01", "2025/01/27", "2025/01/28",
-  "2025/01/29", "2025/01/30", "2025/03/01", 
+  "2024/01/01",
+  "2024/02/09",
+  "2024/02/10",
+  "2024/02/12",
+  "2024/03/01",
+  "2024/05/05",
+  "2024/05/06",
+  "2024/05/15",
+  "2024/06/06",
+  "2024/08/15",
+  "2024/09/16",
+  "2024/09/17",
+  "2024/09/18",
+  "2024/09/19",
+  "2024/09/20",
+  "2024/10/01",
+  "2024/10/03",
+  "2024/10/09",
+  "2024/12/25",
+  "2024/12/30",
+  "2024/12/31",
+  "2025/01/01",
+  "2025/01/27",
+  "2025/01/28",
+  "2025/01/29",
+  "2025/01/30",
+  "2025/03/01",
   "2025/03/03",
+  "2025/05/05",
+  "2025/05/06",
+  "2025/06/06",
 ];
 
-const clearTime = (date) => new Date(date.getFullYear(), date.getMonth(), date.getDate());
+const clearTime = (date) =>
+  new Date(date.getFullYear(), date.getMonth(), date.getDate());
 const isSunday = (date) => date.getDay() === 0;
 
 const addDays = (date, days) => {
@@ -24,7 +48,10 @@ const calHolidays = (newDate, resultDate) => {
   let holidaysCount = 0;
   for (const holiday of holidays) {
     const holidayDate = clearTime(new Date(holiday));
-    if (holidayDate >= clearTime(newDate) && holidayDate <= clearTime(resultDate)) {
+    if (
+      holidayDate >= clearTime(newDate) &&
+      holidayDate <= clearTime(resultDate)
+    ) {
       holidaysCount++;
     }
   }
@@ -42,7 +69,13 @@ const calTerm = (newDate) => {
   }
 
   // 결과 날짜가 공휴일이라면 1일 추가
-  while (holidays.some((holiday) => clearTime(new Date(holiday)).getTime() === clearTime(resultDate).getTime())) {
+  while (
+    holidays.some(
+      (holiday) =>
+        clearTime(new Date(holiday)).getTime() ===
+        clearTime(resultDate).getTime()
+    )
+  ) {
     resultDate = addDays(resultDate, 1);
     // 추가된 날짜가 일요일이면 1일 더 추가
     if (isSunday(resultDate)) {
